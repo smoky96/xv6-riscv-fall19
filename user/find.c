@@ -18,7 +18,7 @@ slash_pos(char *path) {
 }
 
 void find(char *path, char *name) {
-  char buf[512], filename[512], *p;
+  char buf[512], filename[64], *p;
   int fd;
   struct dirent de;
   struct stat st;
@@ -54,7 +54,7 @@ void find(char *path, char *name) {
       while(read(fd, &de, sizeof(de)) == sizeof(de)){
         if ((de.inum == 0) || strcmp(de.name, ".") == 0 || strcmp(de.name, "..") == 0)
           continue;
-        memmove(p, de.name, DIRSIZ);
+        strcpy(p, de.name);
         find(buf, name);
       }
       break;
